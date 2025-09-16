@@ -1,0 +1,27 @@
+# Which HF model to fine-tune
+model_name: "prajjwal1/bert-tiny"   # tiny & fast for tests; change to "bert-base-uncased" for real runs
+output_dir: "outputs/sst2-lora"
+num_train_epochs: 1
+per_device_train_batch_size: 16
+per_device_eval_batch_size: 32
+learning_rate: 5.0e-4
+warmup_ratio: 0.06
+weight_decay: 0.01
+max_length: 128
+evaluation_strategy: "steps"
+eval_steps: 200
+save_strategy: "no"
+logging_steps: 50
+seed: 42
+fp16: false
+
+# Adapter build config
+kind: "lora"                # lora | lora_fa | vera | delta_lora
+lora_plus_lr_ratio: 16.0
+targets:
+  # Names to match across common BERT/DistilBERT/Roberta modules
+  - module_names: ["query", "key", "value", "q_lin", "k_lin", "v_lin", "out_proj", "dense", "out_lin"]
+    module_types: ["Linear"]
+    rank: 8
+    alpha: 16
+    dropout: 0.0

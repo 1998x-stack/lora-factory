@@ -60,7 +60,18 @@ def apply_post_step_updates(model: nn.Module) -> None:
 
 def _find_parent_with_attr(root: nn.Module, dotted_name: str) -> Tuple[nn.Module, str]:
     parts = dotted_name.split(".")
+    if not parts or not all(parts):
+        raise ValueError(f"Invalid module name: {dotted_name!r}")
     parent = root
     for p in parts[:-1]:
+        if not hasattr(parent, p):
+            raise ValueError(
+                f"Cannot resolve module name {dotted_name!r}: no attribute {p!r} on {type(parent).__name__}"
+            )
         parent = getattr(parent, p)
-    return parent, parts[-1]
+    attr = parts[-1]
+    if not hasattr(parent, attr):
+        raise ValueError(
+            f"Cannot resolve module name {dotted_name!r}: no attribute {attr!r} on {type(parent).__name__}"
+        )
+    return parent, attr

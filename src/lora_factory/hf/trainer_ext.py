@@ -1,3 +1,4 @@
+"""Transformers Trainer extension that applies post-step adapter updates."""
 from __future__ import annotations
 
 from transformers import Trainer

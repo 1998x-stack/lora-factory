@@ -1,3 +1,4 @@
+"""Reproducibility RNG seeding helpers."""
 from __future__ import annotations
 
 import random

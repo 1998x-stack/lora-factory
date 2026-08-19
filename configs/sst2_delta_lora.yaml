@@ -15,10 +15,10 @@ seed: 42
 fp16: false
 
 kind: "delta_lora"
-lora_plus_lr_ratio: 8.0
+lora_plus_lr_ratio: 8.0     # lr_B = ratio * lr_A (LoRA+)
 targets:
   - module_names: ["query", "key", "value", "q_lin", "k_lin", "v_lin", "out_proj", "dense", "out_lin"]
     module_types: ["Linear"]
-    rank: 8
-    alpha: 16
+    rank: 8                 # adapter dimension
+    alpha: 16               # effective scale is alpha / rank
     dropout: 0.0

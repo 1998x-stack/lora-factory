@@ -17,11 +17,11 @@ fp16: false
 
 # Adapter build config
 kind: "lora"                # lora | lora_fa | vera | delta_lora
-lora_plus_lr_ratio: 16.0
+lora_plus_lr_ratio: 16.0    # lr_B = ratio * lr_A (LoRA+)
 targets:
   # Names to match across common BERT/DistilBERT/Roberta modules
   - module_names: ["query", "key", "value", "q_lin", "k_lin", "v_lin", "out_proj", "dense", "out_lin"]
     module_types: ["Linear"]
-    rank: 8
-    alpha: 16
+    rank: 8                 # adapter dimension
+    alpha: 16               # effective scale is alpha / rank
     dropout: 0.0

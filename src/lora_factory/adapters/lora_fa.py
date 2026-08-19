@@ -1,3 +1,4 @@
+"""LoRA-FA adapter: A is frozen after initialization, only B is trained."""
 from __future__ import annotations
 
 import math

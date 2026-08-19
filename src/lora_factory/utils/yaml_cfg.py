@@ -1,3 +1,4 @@
+"""Load adapter build configuration from a YAML file."""
 from __future__ import annotations
 
 from dataclasses import asdict

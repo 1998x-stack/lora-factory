@@ -1,3 +1,4 @@
+"""Optimizer construction with LoRA+ parameter groups."""
 from __future__ import annotations
 
 from typing import List, Tuple

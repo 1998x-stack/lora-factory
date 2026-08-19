@@ -1,3 +1,4 @@
+"""Standard LoRA adapter (forward adds scaled B·A)."""
 from __future__ import annotations
 
 import math

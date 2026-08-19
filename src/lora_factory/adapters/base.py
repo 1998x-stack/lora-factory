@@ -1,3 +1,4 @@
+"""Base adapter class and shared metadata used by all variants."""
 from __future__ import annotations
 
 from dataclasses import dataclass

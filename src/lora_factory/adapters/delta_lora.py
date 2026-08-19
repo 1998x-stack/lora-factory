@@ -1,3 +1,4 @@
+"""Delta-LoRA adapter: trains A/B and merges the accumulated delta into the base weight each step."""
 from __future__ import annotations
 
 import torch

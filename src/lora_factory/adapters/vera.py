@@ -1,3 +1,4 @@
+"""VeRA adapter: frozen shared A/B with trainable per-layer vectors."""
 from __future__ import annotations
 
 import math

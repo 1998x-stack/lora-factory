@@ -1,3 +1,4 @@
+"""Registry mapping adapter kind strings to their constructors."""
 from __future__ import annotations
 
 from typing import Callable, Dict

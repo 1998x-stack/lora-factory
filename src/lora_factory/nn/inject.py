@@ -37,11 +37,33 @@ def preview_targets(model: nn.Module, target: TargetSpec) -> List[str]:
     return hits
 
 
+def _is_inside_adapter(root: nn.Module, dotted_name: str, module: nn.Module) -> bool:
+    """Return True if *module* lives under an ``AdapterModule`` (its ``wrapped``
+    base linear, ``lora_A``, ``lora_B``, buffers, ...).
+
+    This prevents re-wrapping: those children are plain Linears whose names
+    still contain the target substring, so without this guard ``apply_adapters``
+    would wrap them too (and, on a second call, wrap the first adapter's
+    children again).
+    """
+    if isinstance(module, AdapterModule):
+        return True
+    parts = dotted_name.split(".")
+    cur = root
+    for p in parts[:-1]:
+        cur = getattr(cur, p)
+        if isinstance(cur, AdapterModule):
+            return True
+    return False
+
+
 def apply_adapters(model: nn.Module, config: AdapterBuildConfig) -> List[str]:
     """Patch target Linear modules in-place. Returns list of patched module names."""
     set_seed(config.seed)
     patched = []
     for name, module in list(model.named_modules()):
+        if _is_inside_adapter(model, name, module):
+            continue
         for spec in config.targets:
             if isinstance(module, nn.Linear) and _match_module(name, module, spec):
                 parent, attr = _find_parent_with_attr(model, name)
